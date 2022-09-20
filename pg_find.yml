@@ -1,0 +1,16 @@
+- name: Get Users and Groups PostgreSQL
+  hosts: all
+  become: yes
+  tasks:
+  - name: Find User
+    command: awk -F"=" '/User/{print $2}' /etc/test/pg-unit
+    register: user_matched
+
+  - name: Find Group
+    command: awk -F"=" '/Group/{print $2}' /etc/test/pg-unit
+    register: group_matched
+
+  - debug:
+          msg: 
+          - "{{ user_matched.stdout_lines }}"  
+          - "{{ group_matched.stdout_lines }}"   
